@@ -4,8 +4,9 @@ import com.example.product.customException.ElementAlreadyExistException;
 import com.example.product.customException.ResourceNotFoundException;
 import com.example.product.models.ParentCategory;
 import com.example.product.repository.ParentCategoryRepository;
+import com.example.product.request.ParentCategoryRequest;
 import com.example.product.service.ParentCategoryService;
-import org.postgresql.util.PSQLException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -50,27 +51,29 @@ public class ParentCategoryServiceImp implements ParentCategoryService {
     }
 
     @Override
-    public ParentCategory addParentCategory(ParentCategory parentCategory) {
+    public ParentCategory addParentCategory(ParentCategoryRequest parentCategoryRequest) {
         try {
+            ParentCategory parentCategory = new ParentCategory();
+            BeanUtils.copyProperties(parentCategoryRequest, parentCategory);
             return parentCategoryRepository.save(parentCategory);
         }
         catch (DataIntegrityViolationException exception) {
-            throw new ElementAlreadyExistException("the category with the name " + parentCategory.getName() + "already exist");
+            throw new ElementAlreadyExistException("the category with the name " + parentCategoryRequest.getName() + "already exist");
         }
     }
 
     @Override
-    public ParentCategory updateParentCategoy(long id, ParentCategory parentCategory) {
+    public ParentCategory updateParentCategoy(long id, ParentCategoryRequest parentCategoryRequest) {
         try {
             ParentCategory targetCategory = parentCategoryRepository.findById(id).get();
-            if (parentCategory.getDescription() != null) {
-                targetCategory.setDescription(parentCategory.getDescription());
+            if (parentCategoryRequest.getDescription()!= null) {
+                targetCategory.setDescription(parentCategoryRequest.getDescription());
             }
-            if (parentCategory.getImage() != null) {
-                targetCategory.setName(parentCategory.getName());
+            if (parentCategoryRequest.getImage() != null) {
+                targetCategory.setName(parentCategoryRequest.getName());
             }
-            if (parentCategory.getImage() != null) {
-                targetCategory.setImage(parentCategory.getImage());
+            if (parentCategoryRequest.getImage() != null) {
+                targetCategory.setImage(parentCategoryRequest.getImage());
             }
             return targetCategory;
         }

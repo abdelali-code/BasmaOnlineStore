@@ -4,8 +4,10 @@ import com.example.product.customException.ResourceNotFoundException;
 import com.example.product.models.Category;
 import com.example.product.models.Product;
 import com.example.product.repository.ProductsRepository;
+import com.example.product.request.ProductRequest;
 import com.example.product.service.CategoryService;
 import com.example.product.service.ProductService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +27,11 @@ public class ProductServiceImp implements ProductService {
     }
 
     /** add a Product */
-    public Product addProduct(Product product) {
+    public Product addProduct(ProductRequest productRequest) {
         try {
-            System.out.println(product.getTempCategory());
-            Category category = categoryService.getCategoryById(product.getTempCategory());
-            System.out.println(category.getName());
+            Product product = new Product();
+            BeanUtils.copyProperties(productRequest, product);
+            Category category = categoryService.getCategoryById(productRequest.getCategoryId());
             product.setCategory(category);
             return productsRepository.save(product);
         }
@@ -54,21 +56,21 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public Product updateProduct(long productId, Product product) {
+    public Product updateProduct(long productId, ProductRequest productRequest) {
         try  {
             Product targetProduct = productsRepository.findById(productId).get();
-            if (product.getDiscount() > 0) {
-                targetProduct.setDiscount(product.getDiscount());
+            if (productRequest.getDiscount() > 0) {
+                targetProduct.setDiscount(productRequest.getDiscount());
             }
-            if (product.getProductImages() != null) {
-                targetProduct.setProductImages(product.getProductImages());
+            if (productRequest.getProductImages() != null) {
+                targetProduct.setProductImages(productRequest.getProductImages());
             }
-            if (product.getTempCategory() > 0) {
-                Category category = categoryService.getCategoryById(product.getTempCategory());
+            if (productRequest.getCategoryId() > 0) {
+                Category category = categoryService.getCategoryById(productRequest.getCategoryId());
                 targetProduct.setCategory(category);
             }
-            if (product.getName() != null) {
-                targetProduct.setName(product.getName());
+            if (productRequest.getName() != null) {
+                targetProduct.setName(productRequest.getName());
             }
             return targetProduct;
         }

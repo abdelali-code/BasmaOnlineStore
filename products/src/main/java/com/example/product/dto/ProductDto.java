@@ -1,2 +1,4 @@
-package com.example.product.dto;public class ProductDto {
+package com.example.product.dto;
+
+public class ProductDto {
 }

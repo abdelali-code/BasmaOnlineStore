@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class COnfiguration {
+public class Config {
 
     @Bean
     public RestTemplate getRestTemplate() {

@@ -1,11 +1,9 @@
 package com.example.product.request;
 
-
-public class CategoryRequest {
+public class ParentCategoryRequest {
     private String name;
-    private String image;
     private String description;
-    private long category;
+    private String image;
 
 
     public String getName() {
@@ -16,14 +14,6 @@ public class CategoryRequest {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -32,11 +22,11 @@ public class CategoryRequest {
         this.description = description;
     }
 
-    public long getCategory() {
-        return category;
+    public String getImage() {
+        return image;
     }
 
-    public void setCategory(long category) {
-        this.category = category;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

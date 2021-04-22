@@ -30,8 +30,8 @@ public class Product {
     @OneToOne
     private Category category;
 
-    @Transient
-    private long tempCategory;
+//    @Transient
+//    private long tempCategory;
 
     public long getId() {
         return id;
@@ -81,11 +81,11 @@ public class Product {
         this.category = category;
     }
 
-    public long getTempCategory() {
-        return tempCategory;
-    }
-
-    public void setTempCategory(long tempCategory) {
-        this.tempCategory = tempCategory;
-    }
+//    public long getTempCategory() {
+//        return tempCategory;
+//    }
+//
+//    public void setTempCategory(long tempCategory) {
+//        this.tempCategory = tempCategory;
+//    }
 }

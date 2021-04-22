@@ -2,7 +2,11 @@ package com.example.product.controllers;
 
 
 import com.example.product.models.Product;
+import com.example.product.request.ProductRequest;
+import com.example.product.responce.ProductResponce;
+import com.example.product.responce.ProductsList;
 import com.example.product.service.ProductService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +22,24 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<ProductsList> getAllProducts() {
         List<Product> products = productService.getAll();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        ProductsList productsList = new ProductsList();
+        for (Product product : products) {
+            ProductResponce productResponce = new ProductResponce();
+            BeanUtils.copyProperties(product, productResponce);
+            productsList.addSingleProducts(productResponce);
+        }
+        return new ResponseEntity<>(productsList, HttpStatus.OK);
     }
 
     /** add products */
     @PostMapping
-    public ResponseEntity<Product> addProducts(@RequestBody Product product) {
-        Product productTarget = productService.addProduct(product);
-        return new ResponseEntity<>(productTarget, HttpStatus.CREATED);
+    public ResponseEntity<ProductResponce> addProducts(@RequestBody ProductRequest productRequest) {
+        Product product = productService.addProduct(productRequest);
+        ProductResponce productResponce = new ProductResponce();
+        BeanUtils.copyProperties(product, productResponce);
+        return new ResponseEntity<>(productResponce, HttpStatus.CREATED);
     }
 
     @DeleteMapping
@@ -47,8 +59,8 @@ public class ProductController {
 
     /** update all field of products */
     @PutMapping("/{productId}")
-    public ResponseEntity<Product> updateProducts(@PathVariable("productId") long productId, @RequestBody Product product){
-        Product productTarget = productService.updateProduct(productId, product);
+    public ResponseEntity<Product> updateProducts(@PathVariable("productId") long productId, @RequestBody ProductRequest productRequest){
+        Product productTarget = productService.updateProduct(productId, productRequest);
         return new ResponseEntity<>(productTarget, HttpStatus.ACCEPTED);
     }
 
