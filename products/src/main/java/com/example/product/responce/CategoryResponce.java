@@ -9,7 +9,8 @@ public class CategoryResponce {
     private String name;
     private String image;
     private String description;
-    private ParentCategory parentCategory;
+    //private ParentCategory parentCategory;
+    private String parentCategory;
 
     public long getId() {
         return id;
@@ -43,11 +44,11 @@ public class CategoryResponce {
         this.description = description;
     }
 
-    public ParentCategory getParentCategory() {
+    public String getParentCategory() {
         return parentCategory;
     }
 
-    public void setParentCategory(ParentCategory parentCategory) {
+    public void setParentCategory(String parentCategory) {
         this.parentCategory = parentCategory;
     }
 }

@@ -3,12 +3,12 @@ package com.example.product.responce;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryList {
+public class CategoryResponceList {
 
 
     private List<CategoryResponce> categoryResponces;
 
-    public CategoryList() {
+    public CategoryResponceList() {
         this.categoryResponces = new ArrayList<>();
     }
 

@@ -15,8 +15,9 @@ public class ProductResponce {
     private double price;
     private int discount;
     private Set<String> productImages = new HashSet();
-    private Category category;
+//    private Category category;
     private String description;
+    private  String category;
 
     public long getId() {
         return id;
@@ -58,11 +59,11 @@ public class ProductResponce {
         this.productImages = productImages;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
