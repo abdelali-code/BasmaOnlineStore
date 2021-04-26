@@ -44,21 +44,27 @@ public class AuthFilter extends ZuulFilter {
         if (!pathNeedsAuth.contains(path)) {
 
             String token = request.getHeader("auth");
-
-            if (token == null) filterMessage(http, "Must provide a token!!");
-            String[] bearer = token.split("Bearer");
-            if (bearer.length < 1 || bearer[1] == null) filterMessage(http, "The token must be Bearer [token]");
-            token = bearer[1];
-
-            try {
-                //parse the String into json
-                Claims claims = Jwts.parser().setSigningKey("onlineshopapi").parseClaimsJws(token).getBody();
-                //sent the user is around the app with http request
-                request.setAttribute("id", Long.parseLong(claims.get("Id").toString()));
-                request.setAttribute("type", claims.get("type").toString());
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                filterMessage(http, "Invalid token!!");
+            System.out.println(token);
+            if (token != null) {
+                //split the String into two part [Bearer string, the real token]
+                String[] bearer = token.split("Bearer");
+                //check if the token provided
+                if (bearer.length > 1 && bearer[1] != null) {
+                    token = bearer[1];
+                    try {
+                        //parse the String into json
+                        Claims claims = Jwts.parser().setSigningKey("fdslkfhkdfhdljfqdhlfhffqshlkfhsfjfxcblukhf").parseClaimsJws(token).getBody();
+                        //sent the user is around the app with http request
+                        request.setAttribute("id", Long.parseLong(claims.get("Id").toString()));
+                        request.setAttribute("type", claims.get("type").toString());
+                    } catch (Exception e) {
+                        filterMessage(http, "Invalid token!!");
+                    }
+                } else {
+                    filterMessage(http, "Must provide a token!!");
+                }
+            } else {
+                filterMessage(http, "Must provide a token!!");
             }
         }
         return null;

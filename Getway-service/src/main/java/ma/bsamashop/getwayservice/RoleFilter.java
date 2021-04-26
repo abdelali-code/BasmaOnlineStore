@@ -35,6 +35,8 @@ public class RoleFilter extends ZuulFilter {
         return true;
     }
 
+    //TODO fix filter in dynamic route
+
     @Override
     public Object run() {
         RequestContext http = RequestContext.getCurrentContext();
@@ -42,12 +44,12 @@ public class RoleFilter extends ZuulFilter {
 
         if (request.getRequestURI().contains("/users/")) {
             System.out.println("-------Contain it -------");
-            if (!request.getAttribute("type").toString().equals("admin")) {
-                http.setResponseBody("You're not allowed get this information's");
-                http.getResponse().setHeader("Content-Type", "application/json");
-                http.setSendZuulResponse(false);
-                http.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
-            }
+//            if (!request.getAttribute("type").toString().equals("admin")) {
+//                http.setResponseBody("You're not allowed get this information's");
+//                http.getResponse().setHeader("Content-Type", "application/json");
+//                http.setSendZuulResponse(false);
+//                http.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+//            }
         }
         return null;
     }
