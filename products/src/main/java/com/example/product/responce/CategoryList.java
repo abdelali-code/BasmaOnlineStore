@@ -1,10 +1,16 @@
 package com.example.product.responce;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryList {
 
+
     private List<CategoryResponce> categoryResponces;
+
+    public CategoryList() {
+        this.categoryResponces = new ArrayList<>();
+    }
 
     public List<CategoryResponce> getCategoryResponces() {
         return categoryResponces;

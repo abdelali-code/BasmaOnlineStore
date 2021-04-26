@@ -24,6 +24,10 @@ public class Product {
     @Column(name = "discount")
     private int discount;
 
+    @Column(name = "description")
+    private String description;
+
+
     @ElementCollection
     protected Set<String> productImages = new HashSet();
 
@@ -81,7 +85,16 @@ public class Product {
         this.category = category;
     }
 
-//    public long getTempCategory() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    //    public long getTempCategory() {
 //        return tempCategory;
 //    }
 //

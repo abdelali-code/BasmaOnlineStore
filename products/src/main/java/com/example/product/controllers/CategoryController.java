@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,17 +24,19 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<CategoryList> getCategories() {
         List<Category> categories = categoryService.getAll();
+        System.out.println("the size of the categories " + categories.size());
         CategoryList categoryList = new CategoryList();
         for (Category category : categories) {
             CategoryResponce categoryResponce = new CategoryResponce();
             BeanUtils.copyProperties(category, categoryResponce);
+            System.out.println("the id " + categoryResponce.getId());
             categoryList.addCategoryResponce(categoryResponce);
         }
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponce> addCategory(@RequestBody CategoryRequest categoryRequest) {
+    public ResponseEntity<CategoryResponce> addCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
         Category targetCategory = categoryService.addCategory(categoryRequest);
         CategoryResponce categoryResponce = new CategoryResponce();
         BeanUtils.copyProperties(targetCategory, categoryResponce);

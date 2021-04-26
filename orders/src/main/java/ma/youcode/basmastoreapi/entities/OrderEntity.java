@@ -4,7 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -25,6 +27,9 @@ public class OrderEntity implements Serializable {
             joinColumns = @JoinColumn( name = "id_order" ),
             inverseJoinColumns = @JoinColumn( name = "id_product" ) )
     private List<ProductEntity> products = new ArrayList<>();
+
+    @Transient
+    private Set<Long> productsId = new HashSet<>();
 
     public OrderEntity() {
     }
@@ -96,5 +101,19 @@ public class OrderEntity implements Serializable {
         this.products = products;
     }
 
+    public boolean isCheckout() {
+        return isCheckout;
+    }
 
+    public void setCheckout(boolean checkout) {
+        isCheckout = checkout;
+    }
+
+    public Set<Long> getProductsId() {
+        return productsId;
+    }
+
+    public void setProductsId(Set<Long> productsId) {
+        this.productsId = productsId;
+    }
 }

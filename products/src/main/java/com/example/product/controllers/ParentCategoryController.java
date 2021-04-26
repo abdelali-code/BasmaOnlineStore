@@ -2,7 +2,6 @@ package com.example.product.controllers;
 
 
 import com.example.product.models.ParentCategory;
-import com.example.product.repository.ParentCategoryRepository;
 import com.example.product.request.ParentCategoryRequest;
 import com.example.product.responce.ParentCategoryList;
 import com.example.product.responce.ParentCategoryResponce;
@@ -13,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,7 +36,7 @@ public class ParentCategoryController {
     }
     /** add ParentCategory */
     @PostMapping
-    public ResponseEntity<ParentCategoryResponce> addParentCategory(@RequestBody ParentCategoryRequest parentCategoryRequest) {
+    public ResponseEntity<ParentCategoryResponce> addParentCategory(@Valid @RequestBody ParentCategoryRequest parentCategoryRequest) {
         ParentCategory parentCategory = parentCategoryService.addParentCategory(parentCategoryRequest);
         ParentCategoryResponce parentCategoryResponce = new ParentCategoryResponce();
         BeanUtils.copyProperties(parentCategory, parentCategoryResponce);

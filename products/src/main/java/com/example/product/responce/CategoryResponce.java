@@ -7,11 +7,8 @@ import com.example.product.models.ParentCategory;
 public class CategoryResponce {
     private long id;
     private String name;
-
     private String image;
-
     private String description;
-
     private ParentCategory parentCategory;
 
     public long getId() {

@@ -7,6 +7,7 @@ import ma.youcode.basmastoreapi.services.ProductService;
 import ma.youcode.basmastoreapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,10 @@ public class OrderRestController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+
     @GetMapping
     private List<OrderEntity> getAllOrders() {
         return orderService.getAll();
@@ -38,9 +43,13 @@ public class OrderRestController {
     private OrderEntity addOrder(@RequestBody OrderEntity orderEntity) {
         orderEntity.setIdOrder(0L);
         List<ProductEntity> products = new ArrayList<>();
-        products.add(productService.getById(1L));
-        products.add(productService.getById(2L));
-        orderEntity.setProducts(products);
+//        products.add(productService.getById(1L));
+//        products.add(productService.getById(2L));
+//        orderEntity.setProducts(products);
+        for (long productId : orderEntity.getProductsId()) {
+            ProductEntity productEntity = restTemplate.getForObject("http://localhost:9000/products/" + productId, ProductEntity.class);
+            products.add(productEntity);
+        }
         orderEntity.setUser(userService.getById(1L));
         orderService.addOrUpdate(orderEntity);
         return orderEntity;

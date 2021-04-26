@@ -16,6 +16,7 @@ public class ProductResponce {
     private int discount;
     private Set<String> productImages = new HashSet();
     private Category category;
+    private String description;
 
     public long getId() {
         return id;
@@ -63,5 +64,13 @@ public class ProductResponce {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

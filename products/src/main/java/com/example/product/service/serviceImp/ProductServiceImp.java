@@ -72,6 +72,11 @@ public class ProductServiceImp implements ProductService {
             if (productRequest.getName() != null) {
                 targetProduct.setName(productRequest.getName());
             }
+            if (productRequest.getDescription() != null) {
+                targetProduct.setDescription(productRequest.getDescription());
+            }
+
+
             return targetProduct;
         }
         catch (Exception exception) {
