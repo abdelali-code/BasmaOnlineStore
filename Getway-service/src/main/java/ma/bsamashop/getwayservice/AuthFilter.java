@@ -44,7 +44,7 @@ public class AuthFilter extends ZuulFilter {
         if (!pathNeedsAuth.contains(path)) {
 
             String token = request.getHeader("auth");
-            System.out.println(token);
+
             if (token != null) {
                 //split the String into two part [Bearer string, the real token]
                 String[] bearer = token.split("Bearer");
