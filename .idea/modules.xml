@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/BasmaOnlineStore.iml" filepath="$PROJECT_DIR$/.idea/BasmaOnlineStore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Service-discovery/Service-discovery.iml" filepath="$PROJECT_DIR$/Service-discovery/Service-discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orders/basma-store-api.iml" filepath="$PROJECT_DIR$/orders/basma-store-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Users/OnlineShopApi/demo.iml" filepath="$PROJECT_DIR$/Users/OnlineShopApi/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/products/demo (1) (com.example).iml" filepath="$PROJECT_DIR$/products/demo (1) (com.example).iml" />
+    </modules>
+  </component>
+</project>
