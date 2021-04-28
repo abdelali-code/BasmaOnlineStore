@@ -2,7 +2,6 @@ package ma.youcode.basmastoreapi.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Table(name = "customer_details")
@@ -26,9 +25,6 @@ public class CustomerDetailsEntity {
     @JoinColumn(name = "id_user")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "customerDetails")
-    private List<ShoppingCartEntity> shoppingCarts;
-
     public CustomerDetailsEntity() {
     }
 
@@ -49,17 +45,16 @@ public class CustomerDetailsEntity {
         this.country = country;
     }
 
-    public CustomerDetailsEntity(String gender, String phone, String address, String city, String country, UserEntity user, List<ShoppingCartEntity> shoppingCarts) {
+    public CustomerDetailsEntity(String gender, String phone, String address, String city, String country, UserEntity user) {
         this.gender = gender;
         this.phone = phone;
         this.address = address;
         this.city = city;
         this.country = country;
         this.user = user;
-        this.shoppingCarts = shoppingCarts;
     }
 
-    public CustomerDetailsEntity(Long idCustomerDetails, String gender, String phone, String address, String city, String country, UserEntity user, List<ShoppingCartEntity> shoppingCarts) {
+    public CustomerDetailsEntity(Long idCustomerDetails, String gender, String phone, String address, String city, String country, UserEntity user) {
         this.idCustomerDetails = idCustomerDetails;
         this.gender = gender;
         this.phone = phone;
@@ -67,7 +62,6 @@ public class CustomerDetailsEntity {
         this.city = city;
         this.country = country;
         this.user = user;
-        this.shoppingCarts = shoppingCarts;
     }
 
     public Long getIdCustomerDetails() {
@@ -126,11 +120,4 @@ public class CustomerDetailsEntity {
         this.user = user;
     }
 
-    public List<ShoppingCartEntity> getShoppingCarts() {
-        return shoppingCarts;
-    }
-
-    public void setShoppingCarts(List<ShoppingCartEntity> shoppingCarts) {
-        this.shoppingCarts = shoppingCarts;
-    }
 }
