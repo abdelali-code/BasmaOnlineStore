@@ -1,41 +1,35 @@
 package ma.youcode.basmastoreapi.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.*;
 
 
 @Entity
-@Table(name = "categories")
+@Table(name = "category")
 public class CategoryEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_category", nullable = false, updatable = false)
     private Integer idCategory;
-    @Column(nullable = false)
+    @NotNull
+    @Column(unique = true)
     private String name;
-//    @OneToMany(mappedBy = "category")
-//    private List<ProductEntity> products = new ArrayList<>();
+    @NotNull
+    private String description;
 
     public CategoryEntity() {
     }
 
-    public CategoryEntity(String name) {
+    public CategoryEntity(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
-    public CategoryEntity(Integer idCategory, String name) {
+    public CategoryEntity(Integer idCategory, String name, String description) {
         this.idCategory = idCategory;
         this.name = name;
-    }
-
-    public CategoryEntity(String name, List<ProductEntity> products) {
-        this.name = name;
-    }
-
-    public CategoryEntity(Integer idCategory, String name, List<ProductEntity> products) {
-        this.idCategory = idCategory;
-        this.name = name;
+        this.description = description;
     }
 
     public Integer getIdCategory() {
@@ -54,11 +48,11 @@ public class CategoryEntity implements Serializable {
         this.name = name;
     }
 
-//    public List<ProductEntity> getProducts() {
-//        return products;
-//    }
-//
-//    public void setProducts(List<ProductEntity> products) {
-//        this.products = products;
-//    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
