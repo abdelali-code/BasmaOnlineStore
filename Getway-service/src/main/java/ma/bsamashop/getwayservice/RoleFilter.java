@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import javax.servlet.http.HttpServletRequest;
 
 public class RoleFilter extends ZuulFilter {
-    
+
     @Override
     public String filterType() {
         return "pre";
