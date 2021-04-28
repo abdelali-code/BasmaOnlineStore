@@ -72,7 +72,6 @@ public class AuthFilter extends ZuulFilter {
 
 
     private void filterMessage(RequestContext http, String msg) {
-
         http.setResponseBody(msg);
         http.getResponse().setHeader("Content-Type", "application/json");
         http.setSendZuulResponse(false);
