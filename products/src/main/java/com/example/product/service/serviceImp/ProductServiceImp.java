@@ -104,7 +104,7 @@ public class ProductServiceImp implements ProductService {
 
             ProductResponce productResponce = new ProductResponce();
             BeanUtils.copyProperties(targetProduct, productResponce);
-            productResponce.setCategory(GlobalConstVariable.HOST+"/categories/"+targetProduct.getCategory().getId());
+            productResponce.setCategory(GlobalConstVariable.HOST + "/categories/" + targetProduct.getCategory().getId());
 
             return productResponce;
         }
