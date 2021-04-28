@@ -1,10 +1,9 @@
 package ma.youcode.basmastoreapi.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -25,11 +24,6 @@ public class UserEntity implements Serializable {
     @Column(nullable = false)
     @JsonIgnore
     private String password;
-    @OneToMany
-    @JoinColumn(name = "id_product")
-    private List<ProductEntity> products = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
-    private List<OrderEntity> orders = new ArrayList<>();
 
     public UserEntity() {
 
@@ -50,27 +44,6 @@ public class UserEntity implements Serializable {
         this.role = role;
         this.email = email;
         this.password = password;
-    }
-
-    public UserEntity(String firstName, String lastName, RoleEntity role, String email, String password, List<ProductEntity> products, List<OrderEntity> orders) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-        this.email = email;
-        this.password = password;
-        this.products = products;
-        this.orders = orders;
-    }
-
-    public UserEntity(Long idUser, String firstName, String lastName, RoleEntity role, String email, String password, List<ProductEntity> products, List<OrderEntity> orders) {
-        this.idUser = idUser;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-        this.email = email;
-        this.password = password;
-        this.products = products;
-        this.orders = orders;
     }
 
     public Long getIdUser() {
@@ -127,22 +100,6 @@ public class UserEntity implements Serializable {
 
     public void setRole(RoleEntity role) {
         this.role = role;
-    }
-
-    public List<ProductEntity> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<ProductEntity> products) {
-        this.products = products;
-    }
-
-    public List<OrderEntity> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<OrderEntity> orders) {
-        this.orders = orders;
     }
 
 }

@@ -1,70 +1,56 @@
 package ma.youcode.basmastoreapi.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class ProductEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_product", nullable = false, updatable = false)
     private Long idProduct;
-    @Column(nullable = false)
+    @NotNull
     private String name;
-    @Column(nullable = false)
+    @NotNull
+    private String description;
+    @NotNull
     private Double price;
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "id_category")
-    private CategoryEntity category;
-    @ManyToMany
-    @JoinTable( name = "order_product",
-            joinColumns = @JoinColumn( name = "id_product" ),
-            inverseJoinColumns = @JoinColumn( name = "id_order" ) )
-    private List<OrderEntity> orders = new ArrayList<>();
+    @JoinColumn(name = "id_sub_category")
+    private SubCategoryEntity subCategory;
 
     public ProductEntity() {
     }
 
-    public ProductEntity(String name, Double price) {
+    public ProductEntity(String name, String description, Double price) {
         this.name = name;
+        this.description = description;
         this.price = price;
     }
 
-    public ProductEntity(Long idProduct, String name, Double price) {
+    public ProductEntity(Long idProduct, String name, String description, Double price) {
         this.idProduct = idProduct;
         this.name = name;
+        this.description = description;
         this.price = price;
     }
 
-    public ProductEntity(String name, Double price, CategoryEntity category) {
+    public ProductEntity(String name, String description, Double price, SubCategoryEntity subCategory) {
         this.name = name;
+        this.description = description;
         this.price = price;
-        this.category = category;
+        this.subCategory = subCategory;
     }
 
-    public ProductEntity(Long idProduct, String name, Double price, CategoryEntity category) {
+    public ProductEntity(Long idProduct, String name, String description, Double price, SubCategoryEntity subCategory) {
         this.idProduct = idProduct;
         this.name = name;
+        this.description = description;
         this.price = price;
-        this.category = category;
-    }
-
-    public ProductEntity(String name, Double price, CategoryEntity category, List<OrderEntity> orders) {
-        this.name = name;
-        this.price = price;
-        this.category = category;
-        this.orders = orders;
-    }
-
-    public ProductEntity(Long idProduct, String name, Double price, CategoryEntity category, List<OrderEntity> orders) {
-        this.idProduct = idProduct;
-        this.name = name;
-        this.price = price;
-        this.category = category;
-        this.orders = orders;
+        this.subCategory = subCategory;
     }
 
     public Long getIdProduct() {
@@ -83,6 +69,14 @@ public class ProductEntity implements Serializable {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Double getPrice() {
         return price;
     }
@@ -91,19 +85,11 @@ public class ProductEntity implements Serializable {
         this.price = price;
     }
 
-    public CategoryEntity getCategory() {
-        return category;
+    public SubCategoryEntity getSubCategory() {
+        return subCategory;
     }
 
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
-    }
-
-    public List<OrderEntity> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<OrderEntity> orders) {
-        this.orders = orders;
+    public void setSubCategory(SubCategoryEntity subCategory) {
+        this.subCategory = subCategory;
     }
 }
