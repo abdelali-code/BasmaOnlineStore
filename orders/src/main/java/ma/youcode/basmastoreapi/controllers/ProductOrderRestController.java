@@ -29,6 +29,7 @@ public class ProductOrderRestController {
     @PostMapping
     public ResponseEntity<ProductOrderEntity> addProductOrder(@RequestBody @Valid ProductOrderEntity productOrder) {
         productOrder.setIdProductOrder(0L);
+        System.out.println(productOrder.getProduct().getIdProduct());
         return ResponseEntity.status(HttpStatus.CREATED).body(productOrderService.addOrUpdate(productOrder));
     }
 

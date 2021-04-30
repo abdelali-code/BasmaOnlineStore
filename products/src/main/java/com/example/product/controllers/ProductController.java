@@ -1,37 +1,27 @@
 package com.example.product.controllers;
 
 
-import com.example.product.models.Product;
 import com.example.product.request.ProductRequest;
 import com.example.product.responce.ProductResponce;
 import com.example.product.responce.ProductsList;
 import com.example.product.service.ProductService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/products")
+@CrossOrigin(origins = "*")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080/products")
     public ResponseEntity<ProductsList> getAllProducts() {
         ProductsList productsList = productService.getAll();
-
-//        List<Product> products = productService.getAll();
-//        ProductsList productsList = new ProductsList();
-//        for (Product product : products) {
-//            ProductResponce productResponce = new ProductResponce();
-//            BeanUtils.copyProperties(product, productResponce);
-//            productsList.addSingleProducts(productResponce);
-//        }
         return new ResponseEntity<>(productsList, HttpStatus.OK);
     }
 
@@ -39,8 +29,6 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductResponce> addProducts(@RequestBody ProductRequest productRequest) {
         ProductResponce productResponce = productService.addProduct(productRequest);
-//        ProductResponce productResponce = new ProductResponce();
-//        BeanUtils.copyProperties(product, productResponce);
         return new ResponseEntity<>(productResponce, HttpStatus.CREATED);
     }
 
@@ -52,7 +40,8 @@ public class ProductController {
 
 
     /** add single products
-     * @return*/
+     * @return
+     */
     @GetMapping("/{productId}")
     public ResponseEntity<ProductResponce> addSingleProducts(@PathVariable("productId") long productId) {
         ProductResponce productResponce = productService.getProductById(productId);
