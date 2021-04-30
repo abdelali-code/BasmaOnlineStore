@@ -1,6 +1,7 @@
 package ma.bsamashop.getwayservice;
 
 //import ma.bsamashop.getwayservice.AuthFilter;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -17,15 +18,14 @@ public class GetwayServiceApplication {
     }
 
 
-
     @Bean
-    public AuthFilter zuulFilter(){
+    public AuthFilter zuulFilter() {
         return new AuthFilter();
     }
 
 
-     @Bean
-    public RoleFilter roleFilter(){
+    @Bean
+    public RoleFilter roleFilter() {
         return new RoleFilter();
-     }
+    }
 }

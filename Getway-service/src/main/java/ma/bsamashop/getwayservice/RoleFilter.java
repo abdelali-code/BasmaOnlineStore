@@ -5,20 +5,8 @@ import com.netflix.zuul.context.RequestContext;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class RoleFilter extends ZuulFilter {
-
-
-    private final Set<String> pathForAdmin = new HashSet<>(
-            Arrays.asList("/users-server/api/user/users/all/user",
-                    "/users-server/api/user/users/find/**",
-                    "/users-server/api/user/users/delete/**",
-
-                    "/users-server/api/user/users/unblock/**"));
-
 
     @Override
     public String filterType() {
@@ -34,8 +22,6 @@ public class RoleFilter extends ZuulFilter {
     public boolean shouldFilter() {
         return true;
     }
-
-    //TODO fix filter in dynamic route
 
     @Override
     public Object run() {
