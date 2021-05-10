@@ -18,6 +18,7 @@ import java.util.Optional;
 //TODO should config CORS
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
 

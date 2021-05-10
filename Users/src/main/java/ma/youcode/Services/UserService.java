@@ -8,9 +8,12 @@ import ma.youcode.Repositorys.UserRepository;
 import ma.youcode.Ulits.EmailValidateur;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,7 +45,9 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     }
 
 
-    public Users createAccountService(String fullName, String email, String pwd, String type) throws AuthException {
+
+
+    public Users createAccountService(String fullName, String email, String pwd) throws AuthException {
 
         if (!emailValidateur.isValid(email)) throw new AuthException("Email not valid");
         //check if email on use
@@ -51,7 +56,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         //check the size of pwd chars
         if (pwd.length() < 6) throw new AuthException("Password so short");
 
-        return userRepository.save(new Users(fullName, email, BCrypt.hashpw(pwd, BCrypt.gensalt(12)), type));
+        return userRepository.save(new Users(fullName, email, BCrypt.hashpw(pwd, BCrypt.gensalt(12)), "user"));
 
 
     }
@@ -60,7 +65,8 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     public List<Users> getAllUsers(String role) {
 
         List<Users> users = userRepository.findByType(role);
-        if (users.size() == 0) throw new AuthException("No users founds");
+        if (users.size() == 0)
+            throw new AuthException("No users founds");
         return users;
 
     }
@@ -70,7 +76,8 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         try {
             //check account exist
             Optional<Users> victime = userRepository.findById(id);
-            if (victime.isEmpty()) throw new AuthException("Account not exist");
+            if (victime.isEmpty())
+                throw new AuthException("Account not exist");
             Users user = victime.get();
             //update it status = block it
             user.setStatus(stt);

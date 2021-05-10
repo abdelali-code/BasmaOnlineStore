@@ -13,7 +13,7 @@ public interface UserServiceInterface {
     Users loginService(String email, String pwd);
 
 
-    Users createAccountService(String fullName, String email, String pwd, String type) throws AuthException;
+    Users createAccountService(String fullName, String email, String pwd) throws AuthException;
 
 
     List<Users> getAllUsers(String role);
