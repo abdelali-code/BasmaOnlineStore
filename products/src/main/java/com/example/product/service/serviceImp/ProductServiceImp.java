@@ -123,4 +123,14 @@ public class ProductServiceImp implements ProductService {
             throw new ResourceNotFoundException("product not found with id" + productId);
         }
     }
+
+    @Override
+    public void deleteProductsByIdsIn(List<Long> ids) {
+        try {
+            productsRepository.deleteAllByIdIn(ids);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
 }

@@ -1,25 +1,30 @@
 package com.example.product.controllers;
 
 
+import com.example.product.request.IdsList;
 import com.example.product.request.ProductRequest;
 import com.example.product.responce.ProductResponce;
 import com.example.product.responce.ProductsList;
 import com.example.product.service.ProductService;
+import com.netflix.discovery.DiscoveryClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
+
+
     @GetMapping
-    @CrossOrigin(origins = "http://localhost:8080/products")
     public ResponseEntity<ProductsList> getAllProducts() {
         ProductsList productsList = productService.getAll();
         return new ResponseEntity<>(productsList, HttpStatus.OK);
@@ -28,13 +33,16 @@ public class ProductController {
     /** add products */
     @PostMapping
     public ResponseEntity<ProductResponce> addProducts(@RequestBody ProductRequest productRequest) {
+        System.out.println(productRequest.toString());
         ProductResponce productResponce = productService.addProduct(productRequest);
         return new ResponseEntity<>(productResponce, HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> deleteAll() {
-        productService.deleteAllProducts();
+    public ResponseEntity<Object> deleteAll(@RequestBody IdsList ids) {
+//        productService.deleteAllProducts();
+        System.out.println(ids);
+        productService.deleteProductsByIdsIn(ids.getIds());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -65,4 +73,9 @@ public class ProductController {
         productService.deleteProduct(productId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+    /**
+     * delete list of the product by ids
+     * */
 }

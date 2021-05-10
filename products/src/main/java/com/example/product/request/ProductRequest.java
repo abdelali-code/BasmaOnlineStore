@@ -67,4 +67,16 @@ public class ProductRequest {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "ProductRequest{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", discount=" + discount +
+                ", productImages=" + productImages +
+                ", categoryId=" + categoryId +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
