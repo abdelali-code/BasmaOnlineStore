@@ -2,31 +2,46 @@ package com.example.product.controllers;
 
 
 import com.example.product.models.ParentCategory;
+import com.example.product.request.ParentCategoryRequest;
+import com.example.product.responce.ParentCategoryList;
+import com.example.product.responce.ParentCategoryResponce;
 import com.example.product.service.ParentCategoryService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/main-categories")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ParentCategoryController {
 
     @Autowired
     private ParentCategoryService parentCategoryService;
     /** get all parent categry */
     @GetMapping
-    public ResponseEntity<List<ParentCategory>> getAll() {
+    public ResponseEntity<ParentCategoryList> getAll() {
         List<ParentCategory>  parentCategories = parentCategoryService.getAll();
-        return new ResponseEntity<>(parentCategories, HttpStatus.OK);
+        ParentCategoryList parentCategoryList = new ParentCategoryList();
+
+        for (ParentCategory parentCategory : parentCategories) {
+            ParentCategoryResponce parentCategoryResponce = new ParentCategoryResponce();
+            BeanUtils.copyProperties(parentCategory, parentCategoryResponce);
+            parentCategoryList.addParentCategory(parentCategoryResponce);
+        }
+        return new ResponseEntity<>(parentCategoryList, HttpStatus.OK);
     }
     /** add ParentCategory */
     @PostMapping
-    public ResponseEntity<ParentCategory> addParentCategory(@RequestBody ParentCategory parentCategory) {
-        ParentCategory category = parentCategoryService.addParentCategory(parentCategory);
-        return new ResponseEntity<>(category, HttpStatus.CREATED);
+    public ResponseEntity<ParentCategoryResponce> addParentCategory(@Valid @RequestBody ParentCategoryRequest parentCategoryRequest) {
+        ParentCategory parentCategory = parentCategoryService.addParentCategory(parentCategoryRequest);
+        ParentCategoryResponce parentCategoryResponce = new ParentCategoryResponce();
+        BeanUtils.copyProperties(parentCategory, parentCategoryResponce);
+        return new ResponseEntity<>(parentCategoryResponce, HttpStatus.CREATED);
     }
     /** delete all parent category */
     @DeleteMapping
@@ -37,15 +52,19 @@ public class ParentCategoryController {
 
     /** get parent categry with id */
     @GetMapping("/{cateId}")
-    public ResponseEntity<ParentCategory> getParentCategoryWithId(@PathVariable("cateId") long cateId) {
+    public ResponseEntity<ParentCategoryResponce> getParentCategoryWithId(@PathVariable("cateId") long cateId) {
         ParentCategory parentCategory = parentCategoryService.getParentCategoryById(cateId);
-        return new ResponseEntity<>(parentCategory, HttpStatus.OK);
+        ParentCategoryResponce parentCategoryResponce = new ParentCategoryResponce();
+        BeanUtils.copyProperties(parentCategory, parentCategoryResponce);
+        return new ResponseEntity<>(parentCategoryResponce, HttpStatus.OK);
     }
     /**  update parentCategory */
     @PutMapping("/{cateId}")
-    public ResponseEntity<ParentCategory> getParentCategory(@PathVariable("cateId") long cateId, @RequestBody ParentCategory parentCategory) {
-        ParentCategory category = parentCategoryService.updateParentCategoy(cateId, parentCategory);
-        return new ResponseEntity<>(category, HttpStatus.ACCEPTED);
+    public ResponseEntity<ParentCategoryResponce> getParentCategory(@PathVariable("cateId") long cateId, @RequestBody ParentCategoryRequest parentCategoryRequest) {
+        ParentCategory parentCategory = parentCategoryService.updateParentCategoy(cateId, parentCategoryRequest);
+        ParentCategoryResponce parentCategoryResponce = new ParentCategoryResponce();
+        BeanUtils.copyProperties(parentCategory, parentCategoryResponce);
+        return new ResponseEntity<>(parentCategoryResponce, HttpStatus.ACCEPTED);
     }
 
     /**  delete parentCategory */

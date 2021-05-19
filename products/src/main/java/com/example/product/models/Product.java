@@ -24,14 +24,18 @@ public class Product {
     @Column(name = "discount")
     private int discount;
 
+    @Column(name = "description")
+    private String description;
+
+
     @ElementCollection
     protected Set<String> productImages = new HashSet();
 
     @OneToOne
     private Category category;
 
-    @Transient
-    private long tempCategory;
+//    @Transient
+//    private long tempCategory;
 
     public long getId() {
         return id;
@@ -81,11 +85,20 @@ public class Product {
         this.category = category;
     }
 
-    public long getTempCategory() {
-        return tempCategory;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTempCategory(long tempCategory) {
-        this.tempCategory = tempCategory;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
+
+    //    public long getTempCategory() {
+//        return tempCategory;
+//    }
+//
+//    public void setTempCategory(long tempCategory) {
+//        this.tempCategory = tempCategory;
+//    }
 }

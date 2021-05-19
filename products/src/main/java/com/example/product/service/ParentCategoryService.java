@@ -1,6 +1,7 @@
 package com.example.product.service;
 
 import com.example.product.models.ParentCategory;
+import com.example.product.request.ParentCategoryRequest;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface ParentCategoryService {
     void deleteAll();
     void deleteCategoryById(long id);
 
-    ParentCategory addParentCategory(ParentCategory parentCategory);
+    ParentCategory addParentCategory(ParentCategoryRequest parentCategoryRequest);
 
-    ParentCategory updateParentCategoy(long id, ParentCategory parentCategory);
+    ParentCategory updateParentCategoy(long id, ParentCategoryRequest parentCategoryRequest);
 }

@@ -12,12 +12,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO FIX ERROR 500 WHEN USER SIGNUP
 public class AuthFilter extends ZuulFilter {
 
 
     private final Set<String> pathNeedsAuth = new HashSet<>(
             Arrays.asList("/users-server/api/signup",
-                    "/users-server/api/login"));
+                    "/users-server/api/login", "/users-server/api/user/address"));
 
     @Override
     public String filterType() {
@@ -72,7 +73,6 @@ public class AuthFilter extends ZuulFilter {
 
 
     private void filterMessage(RequestContext http, String msg) {
-
         http.setResponseBody(msg);
         http.getResponse().setHeader("Content-Type", "application/json");
         http.setSendZuulResponse(false);

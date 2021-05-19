@@ -1,17 +1,22 @@
 package com.example.product.service;
 
 import com.example.product.models.Product;
+import com.example.product.request.ProductRequest;
+import com.example.product.responce.ProductResponce;
+import com.example.product.responce.ProductsList;
 
 import java.util.List;
 
 public interface ProductService {
-    List<Product> getAll();
-    Product addProduct(Product product);
+    ProductsList getAll();
+    ProductResponce addProduct(ProductRequest product);
     void deleteAllProducts();
 
-    Product getProductById(long productId);
+    ProductResponce getProductById(long productId);
 
-    Product updateProduct(long productId, Product product);
+    ProductResponce updateProduct(long productId, ProductRequest product);
 
     void deleteProduct(long productId);
+
+    void deleteProductsByIdsIn(List<Long> ids);
 }

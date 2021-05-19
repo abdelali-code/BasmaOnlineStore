@@ -14,7 +14,10 @@ public class Category {
     private String name;
 
     @Column(name = "category_image")
-    private String categoryImage;
+    private String image;
+
+    @Column(name = "description")
+    private String description;
 
     @OneToOne
     private ParentCategory parentCategory;
@@ -36,12 +39,12 @@ public class Category {
         this.name = name;
     }
 
-    public String getCategoryImage() {
-        return categoryImage;
+    public String getImage() {
+        return image;
     }
 
-    public void setCategoryImage(String categoryImage) {
-        this.categoryImage = categoryImage;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public ParentCategory getParentCategory() {
@@ -50,5 +53,13 @@ public class Category {
 
     public void setParentCategory(ParentCategory parentCategory) {
         this.parentCategory = parentCategory;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
