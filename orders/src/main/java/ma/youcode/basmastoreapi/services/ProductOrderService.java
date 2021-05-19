@@ -1,6 +1,7 @@
 package ma.youcode.basmastoreapi.services;
 
 import ma.youcode.basmastoreapi.entities.ProductOrderEntity;
+import ma.youcode.basmastoreapi.exceptions.ProductOrderNotExistException;
 import ma.youcode.basmastoreapi.repositories.ProductOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,11 @@ public class ProductOrderService {
     private ProductOrderRepository productOrderRepository;
 
     public ProductOrderEntity getById(Long idProductOrder) {
-        return productOrderRepository.findById(idProductOrder).get();
+        if (productOrderRepository.findById(idProductOrder).isPresent()) {
+            return productOrderRepository.findById(idProductOrder).get();
+        } else {
+            throw new ProductOrderNotExistException("Product order does not exist");
+        }
     }
 
     public List<ProductOrderEntity> getAll() {

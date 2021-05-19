@@ -3,6 +3,7 @@ package ma.youcode.basmastoreapi.services;
 import ma.youcode.basmastoreapi.entities.OrderStatus;
 import ma.youcode.basmastoreapi.entities.PaymentMethod;
 import ma.youcode.basmastoreapi.entities.ShoppingCartEntity;
+import ma.youcode.basmastoreapi.exceptions.ShoppingCartNotExistException;
 import ma.youcode.basmastoreapi.repositories.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,11 @@ public class ShoppingCartService {
     private ShoppingCartRepository shoppingCartRepository;
 
     public ShoppingCartEntity getById(Long idShoppingCart) {
-        return shoppingCartRepository.findById(idShoppingCart).get();
+        if (shoppingCartRepository.findById(idShoppingCart).isPresent()) {
+            return shoppingCartRepository.findById(idShoppingCart).get();
+        } else {
+            throw new ShoppingCartNotExistException("Shopping cart does not exist");
+        }
     }
 
     public List<ShoppingCartEntity> getAll() {

@@ -2,7 +2,10 @@ package ma.youcode.basmastoreapi.controllers;
 
 import ma.youcode.basmastoreapi.entities.OrderStatus;
 import ma.youcode.basmastoreapi.entities.PaymentMethod;
+import ma.youcode.basmastoreapi.entities.PromoCodeEntity;
 import ma.youcode.basmastoreapi.entities.ShoppingCartEntity;
+import ma.youcode.basmastoreapi.exceptions.PromoCodeNotExistException;
+import ma.youcode.basmastoreapi.services.PromoCodeService;
 import ma.youcode.basmastoreapi.services.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,9 @@ import java.util.List;
 public class ShoppingCartRestController {
 
     @Autowired
+    private PromoCodeService promoCodeService;
+
+    @Autowired
     private ShoppingCartService shoppingCartService;
 
     @GetMapping
@@ -32,8 +38,22 @@ public class ShoppingCartRestController {
     }
 
     @PostMapping
-    public ResponseEntity<ShoppingCartEntity> addShoppingCart(@RequestBody @Valid ShoppingCartEntity shoppingCart) {
+    public ResponseEntity<ShoppingCartEntity> addShoppingCart(@RequestBody @Valid ShoppingCartEntity shoppingCart, @RequestParam("promo-code") String promoCode) {
         shoppingCart.setIdShoppingCart(0L);
+        PromoCodeEntity promoCodeEntity = promoCodeService.findByCode(promoCode);
+        Date currentDate = new Date(System.currentTimeMillis());
+        if (promoCodeEntity != null) {
+            if (promoCodeEntity.getStartDate().compareTo(currentDate) <= 0 && promoCodeEntity.getEndDate().compareTo(currentDate) >= 0) {
+                shoppingCart.setPromoCode(promoCodeEntity);
+                shoppingCart.setTotalPrice(shoppingCart.getTotalPrice() * promoCodeEntity.getPercentage());
+                shoppingCartService.addOrUpdate(shoppingCart);
+            } else {
+                throw new PromoCodeNotExistException("Promo code has expired");
+            }
+
+        } else  {
+            throw new PromoCodeNotExistException("Promo code does not exist");
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(shoppingCartService.addOrUpdate(shoppingCart));
     }
 

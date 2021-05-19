@@ -1,7 +1,6 @@
 package ma.youcode.basmastoreapi.exceptions;
 
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -17,16 +16,9 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class ExceptionHandling {
-
-    @ExceptionHandler({NoSuchElementException.class, EmptyResultDataAccessException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError handleNoSuchElementException(HttpServletRequest request) {
-        return new ApiError(HttpStatus.NOT_FOUND.value(), "Entity instance does not exist", request.getServletPath());
-    }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -56,6 +48,24 @@ public class ExceptionHandling {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleMissingServletRequestParameterException(MissingServletRequestParameterException exception, HttpServletRequest request) {
         return new ApiError(HttpStatus.BAD_REQUEST.value(), exception.getParameterName() + " query param is not present", request.getServletPath());
+    }
+
+    @ExceptionHandler(PromoCodeNotExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handlePromoCodeNotExistException(PromoCodeNotExistException exception, HttpServletRequest request) {
+        return new ApiError(HttpStatus.NOT_FOUND.value(), exception.getMessage(), request.getServletPath());
+    }
+
+    @ExceptionHandler(ProductOrderNotExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handleProductOrderNotExistException(ProductOrderNotExistException exception, HttpServletRequest request) {
+        return new ApiError(HttpStatus.NOT_FOUND.value(), exception.getMessage(), request.getServletPath());
+    }
+
+    @ExceptionHandler(ShoppingCartNotExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handleShoppingCartNotExistException(ShoppingCartNotExistException exception, HttpServletRequest request) {
+        return new ApiError(HttpStatus.NOT_FOUND.value(), exception.getMessage(), request.getServletPath());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

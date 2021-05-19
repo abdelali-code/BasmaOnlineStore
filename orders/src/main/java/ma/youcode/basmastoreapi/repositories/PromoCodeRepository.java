@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PromoCodeRepository extends JpaRepository<PromoCodeEntity, Integer> {
+    PromoCodeEntity findPromoCodeEntityByCode(String code);
 }

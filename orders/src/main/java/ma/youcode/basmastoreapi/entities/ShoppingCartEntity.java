@@ -37,11 +37,9 @@ public class ShoppingCartEntity {
             inverseJoinColumns = @JoinColumn(name = "id_product_order"))
     private List<ProductOrderEntity> productOrders = new ArrayList<>();
     @NotNull
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_customer_details")
     private CustomerDetailsEntity customerDetails;
-    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "id_promo_code")
     private PromoCodeEntity promoCode;
